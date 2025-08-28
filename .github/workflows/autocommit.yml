@@ -1,0 +1,26 @@
+name: Auto Commit
+
+on:
+  schedule:
+    - cron: '0 0 * * *'   # Runs every day at midnight UTC
+  workflow_dispatch:       # Lets you run it manually from GitHub Actions tab
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set Git Config
+        run: |
+          git config user.name "Shivakumarcr7"
+          git config user.email "141359854+Shivakumarcr7@users.noreply.github.com"
+
+      - name: Make a contribution file
+        run: |
+          echo "seed $(date)" >> contribution.txt
+          git add contribution.txt
+          git commit -m "chore: daily contribution"
+          git push
